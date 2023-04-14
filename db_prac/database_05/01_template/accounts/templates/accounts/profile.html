@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <h1>{{ person.username }}님의 프로필</h1>
+    <hr>
+    <div>
+        <div>
+            팔로잉 : {{ person.followings.all|length }} / 팔로워 : {{ person.followers.all|length }}
+        </div>
+        {% if request.user != person %}
+        <div>
+            <form action="{% url 'accounts:follow' person.pk%}" method='POST'>
+                {% csrf_token %}
+                {% if request.user in person.followers.all %}
+                    <input type="submit" value='Unfollow'>
+                {% else %}
+                    <input type="submit" value='follow'>
+                {% endif %}
+            </form>
+        </div>
+        {% endif %}
+    </div>
+
+    <hr>
+    <h5> {{ person.username }}'s 게시글 </h5>
+    {% for article in person.article_set.all %}
+        <div class='card'>
+            <div class='card-body'>
+                <h5 class='card-title'>{{ article.title }}</h5>
+                <p class=card-title>{{ article.content }}</p>
+                <a href="{% url 'articles:detail' article.pk %}" class='btn btn-primary'>
+                    자세히 보기
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+    <hr><br><br>
+
+    
+    <h5> {{ person.username }}'s comment </h5>
+    {% for comment in person.comment_set.all %}
+        <div class='card'>
+            <div class='card-body'>
+                <h5 class='card-title'>{{ comment.title }}</h5>
+                <p class=card-title>{{ comment.content }}</p>
+                <a href="{% url 'articles:detail' comment.pk %}" class='btn btn-primary'>
+                    원문 보기
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+    <hr><br><br>
+
+    <h5>{{ person.username }}님이 좋아한 게시글</h5>
+    <hr>
+
+    <h5> {{ person.username }}'s like </h5>
+    {% for article in person.like_articles.all %}
+        <div class='card'>
+            <div class='card-body'>
+                <h5 class='card-title'>{{ article.title }}</h5>
+                <p class=card-title>{{ article.content }}</p>
+                <a href="{% url 'articles:detail' article.pk %}" class='btn btn-primary'>
+                    원문 보기
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+    <hr><br>
+    <a href="{% url 'articles:index' %}" class='btn btn-success'>목록</a>
+{% endblock content %}

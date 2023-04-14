@@ -1,0 +1,18 @@
+-- users table 생성
+-- CREATE TABLE users (
+--     first_name TEXT NOT NULL,
+--     last_name TEXT NOT NULL,
+--     age INTEGER NOT NULL,
+--     country TEXT NOT NULL,
+--     phone TEXT NOT NULL,
+--     balance INTEGER NOT NULL
+-- );
+
+-- SELECT COUNT(*) FROM users
+
+-- SELECT SUM(age) FROM users
+
+-- SELECT AVG(age) FROM users
+
+-- SELECT SUM(age) / COUNT(*) as avg FROM users
+
